@@ -1,0 +1,31 @@
+a>>>
+---------------------------------------------------------
+SELECT COUNT(orderID) AS "Answer"
+FROM Orders JOIN Shippers USING(ShipperID)
+WHERE ShipperName="Speedy Express"
+---------------------------------------------------------
+Answer: 54
+
+b>>
+---------------------------------------------------------
+
+SELECT lastname AS "Answer"
+FROM (SELECT MAX(totalOrders),lastname FROM (SELECT COUNT(orderId) AS totalOrders, employeeID, lastname FROM ORDERS JOIN employees USING(employeeID)GROUP BY employeeID))
+---------------------------------------------------------
+Answer: Peacock
+---------------------------------------------------------
+c>>
+---------------------------------------------------------
+SELECT 
+Products.ProductName, SUM(OrderDetails.Quantity) AS Total_orders, Customers.Country
+FROM Products
+JOIN OrderDetails ON OrderDetails.ProductID = Products.ProductID
+JOIN Orders ON Orders.OrderID = OrderDetails.OrderID
+JOIN Customers ON Customers.CustomerID = Orders.CustomerID
+WHERE Customers.Country = "Germany"
+GROUP BY Products.ProductName
+ORDER BY Total_orders DESC
+LIMIT 1;
+---------------------------------------------------------
+Boston Crab Meat
+160	
